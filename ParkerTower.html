@@ -22,6 +22,9 @@
 </head>
 
 <body>
+<img id="student" width="25" height="25"
+src="student.png" alt="FOODBOI">
+
 <canvas id='canvas' class='canvas' width='800' height='542' style='border:1px solid #000;'></canvas>
 <div class='tower' style='background-color: green' onclick="grabTower(0)">
 
@@ -66,32 +69,20 @@
     Attackers Stopped: <span id='stopped'>0</span>
 </div>
 <p>
-    <script type='text/javascript' src='mainLoop.js'></script>
-    <script type='text/javascript' src='attackerUnits.js'></script>
-    <script type='text/javascript' src='towerUnits.js'></script>
-    <script type='text/javascript' src='bullets.js'></script>
-    <script type='text/javascript' src='mouseClick.js'></script>
+    
 
     <script>
         var lives;
+        var studentImg = document.getElementById("student");
 
         function Enemy(health, img, x, y) {
             var life=health;
             this.x=x;
             this.y=y;
+            studentImg = img;
+            ctx.drawImage(studentImg, 10, 10);
         }
-        function path(Enemy){
-
-        }
-
-        Enemy.prototype.draw = function() {
-            context.beginPath();
-            context.fillStyle = this.color;
-            context.fillRect(this.x,this.y,rectWidth,rectWidth);
-            //life bar
-            context.fillStyle='orange';
-            context.fillRect(this.x,this.y+rectWidth/3,rectWidth*this.life/(this.maxLife+addedLife),rectWidth/3);
-        };
+       
 
     </script>
 
