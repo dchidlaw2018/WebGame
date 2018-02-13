@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<style>
+	.mycanvas{
+		float:left;
+		background:url(map.png);
+	}
+ </style>
+<body>
+
+<canvas width=800 height=542 id="mycanvas"></canvas>
+
+
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx = mycanvas.getContext("2d");
+var x=5, y=0;
+window.onload = animate;
+
+var posX=0, posY=0;
+
+
+var studentImg = new Image();
+var mapImg = new Image();
+
+studentImg.src = "student.png";
+mapImg.src = "map.png";
+var stuX=100, stuY=100;
+
+function animate() {
+  clearBackground();
+  drawStuff();
+  alert("animating");
+}
+
+function clearBackground() {
+  ctx.fillStyle = "green";
+  ctx.fillRect( 0, 0, mycanvas.width, mycanvas.height);
+}
+
+
+function drawStuff() {
+
+ctx.drawImage(studentImg, stuX, stuY, 25, 25);
+ctx.fillStyle = "black";
+ctx.font = "30px Arial";
+}
+
+</script>
+</body>
+</html>
