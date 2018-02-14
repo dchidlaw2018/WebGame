@@ -8,14 +8,17 @@
  </style>
 <body>
 
-<canvas width=800 height=542 id="mycanvas"></canvas>
+<canvas width=800 height=542 id="mycanvas" class='mycanvas' ></canvas>
 
 
 
 <script>
-var canvas = document.getElementById("myCanvas");
+var canvas = document.getElementById("mycanvas");
 var ctx = mycanvas.getContext("2d");
 var x=5, y=0;
+
+var stuSpnX=700, stuSpnY=250;
+
 window.onload = animate;
 
 var posX=0, posY=0;
@@ -35,14 +38,24 @@ function animate() {
 }
 
 function clearBackground() {
-  ctx.fillStyle = "green";
-  ctx.fillRect( 0, 0, mycanvas.width, mycanvas.height);
+  ctx.drawImage(mapImg, 0,0,800,542);
 }
+
+function student(x, y, health, img, path){
+	this.x = x;
+	this.y = y;
+}
+
+function spawnStudent(){
+	ctx.drawImage(studentImg, stuSpnX, stuY, 25, 25);
+}
+
+
 
 
 function drawStuff() {
 
-ctx.drawImage(studentImg, stuX, stuY, 25, 25);
+ctx.drawImage(studentImg, stuSpnX, stuSpnY, 25, 25);
 ctx.fillStyle = "black";
 ctx.font = "30px Arial";
 }
