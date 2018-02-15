@@ -45,19 +45,37 @@ function student(x, y, health, img, path){
 	this.x = x;
 	this.y = y;
 }
+setInterval(spawnStudent, 1000);
+var currEnemyCount=0;
+var enemyCount=2;
+
 
 function spawnStudent(){
-	ctx.drawImage(studentImg, stuSpnX, stuY, 25, 25);
-}
-
-
-
+  if(currEnemyCount<enemyCount){
+	  var walkWay = Math.random();
+    var x;
+    var y;
+    if(walkWay<=.33){
+      x=750;
+      y=50;
+    }
+    else if(walkWay<=.66 && walkWay>.33){
+      x=750;
+      y=250;
+    } 
+    else if(walkWay>.66){
+      x=750;
+      y=500;
+    }
+    ctx.drawImage(studentImg, x, y, 25, 25);
+    currEnemyCount++;
+  }  
+}   
+    
 
 function drawStuff() {
-
-ctx.drawImage(studentImg, stuSpnX, stuSpnY, 25, 25);
-ctx.fillStyle = "black";
-ctx.font = "30px Arial";
+  ctx.fillStyle = "black";
+  ctx.font = "30px Arial";
 }
 
 </script>
