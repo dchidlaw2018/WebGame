@@ -32,7 +32,7 @@
 
 <canvas width=800 height=542 id="mycanvas" class='mycanvas' ></canvas>
 
-<button class="button-xlarge pure-button" onClick=spawnTower();>Wow this is where you get a tower from</button>
+<button class="button-xlarge pure-button" onClick="spawnBackpackTower()";>Wow this is where you get a tower from</button>
 
 
 <script>
@@ -49,9 +49,11 @@ var posX=0, posY=0;
 
 var studentImg = new Image();
 var mapImg = new Image();
+var backpackImg = new Image();
 
 studentImg.src = "student.png";
 mapImg.src = "map.png";
+backpackImg.src = "backpackTower.png";
 var stuX=100, stuY=100;
 
 function animate() {
@@ -73,6 +75,11 @@ var currEnemyCount=0;
 var enemyCount=2;
 
 
+function moveStudent(student){
+  student.x--;
+}
+
+
 function spawnStudent(){
   if(currEnemyCount<enemyCount){
 	  var walkWay = Math.random();
@@ -90,8 +97,9 @@ function spawnStudent(){
       x=750;
       y=500;
     }
-    ctx.drawImage(studentImg, x, y, 25, 25);
+    var stud = ctx.drawImage(studentImg, x, y, 25, 25);
     currEnemyCount++;
+    setInterval(moveStudent(stud), 100);
   }  
 }
 
@@ -105,8 +113,8 @@ function drawStuff() {
   ctx.fillStyle = "black";
   ctx.font = "30px Arial";
 }
-function spawnTower(){
-  
+function spawnBackpackTower(){
+  ctx.drawImage(backpackImg, 600, 10)
 }
 
 </script>
