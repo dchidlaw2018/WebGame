@@ -25,7 +25,11 @@
       background: rgb(28, 184, 65);
     }
 
-    </style>
+    img{
+    top:0;
+    left:0;
+    position:absolute;
+}
  </style>
 </head> 
 <body>
@@ -35,8 +39,15 @@
 <button class="button-xlarge pure-button" onClick="spawnBackpackTower()";>Wow this is where you get a tower from</button>
 
 
+
 <script>
+document.addEventListener("mousemove", Follow, false);
+
 var canvas = document.getElementById("mycanvas");
+//canvas.addEventListener("click", spawnBackpackTower(), false);
+canvas.onClick = function(){spawnBackpackTower()};
+
+
 var ctx = mycanvas.getContext("2d");
 var x=5, y=0;
 
@@ -47,14 +58,20 @@ window.onload = animate;
 var posX=0, posY=0;
 
 
-var studentImg = new Image();
+var foodImg = new Image();
 var mapImg = new Image();
 var backpackImg = new Image();
 
-studentImg.src = "student.png";
+foodImg.src = "student.png";
 mapImg.src = "map.png";
 backpackImg.src = "backpackTower.png";
 var stuX=100, stuY=100;
+
+function Follow(){
+	var x = event.clientX;		//x and y relative to the 
+	var y = event.clientY;		//window's coordinate system
+	
+}
 
 function animate() {
   clearBackground();
@@ -66,21 +83,22 @@ function clearBackground() {
   ctx.drawImage(mapImg, 0,0,800,542);
 }
 
-function student(x, y, health, img, path){
+function food(x, y, health, img, path){
 	this.x = x;
 	this.y = y;
 }
-setInterval(spawnStudent, 1000);
+setInterval(spawnFood, 1000);
 var currEnemyCount=0;
 var enemyCount=2;
 
 
-function moveStudent(student){
-  student.x--;
-}
 
 
-function spawnStudent(){
+
+
+
+//////////////////////ENEMY SPAWNING///////////////////
+function spawnFood(){
   if(currEnemyCount<enemyCount){
 	  var walkWay = Math.random();
     var x;
@@ -97,25 +115,53 @@ function spawnStudent(){
       x=750;
       y=500;
     }
-    var stud = ctx.drawImage(studentImg, x, y, 25, 25);
+    var stud = ctx.drawImage(foodImg, x, y, 25, 25);
     currEnemyCount++;
-    setInterval(moveStudent(stud), 100);
+    setInterval(moveFood(stud), 100);
   }  
 }
 
-function tower(x, y, damage, img, weaponImg){
-  this.x=x;
-  this.y=y;
-}   
-    
+function moveFood(food){
+  //food.x--;
+}
+//////////////////////ENEMY SPAWNING///////////////////
+
+
+
+
+
 
 function drawStuff() {
   ctx.fillStyle = "black";
   ctx.font = "30px Arial";
 }
-function spawnBackpackTower(){
-  ctx.drawImage(backpackImg, 600, 10)
+
+
+
+
+
+
+
+//////////////////TOWER FUNCTIONS//////////////////////
+var placingTower=false;
+
+
+function tower(x, y, damage, img, weaponImg){
+  this.x=x;
+  this.y=y;
+}   
+
+function spawnBackpackTower(){	
+	alert("Working");
+	placingTower=true;
+  if(placingTower){
+  	ctx.drawImage(backpackImg, x, y);
+  }
+  placingTower=false;
 }
+
+//////////////////TOWER FUNCTIONS//////////////////////
+
 
 </script>
 </body>
