@@ -96,7 +96,7 @@ function clearBackground() {
 }
 
 var currEnemyCount=0;
-var enemyCount=2;
+var enemyCount=3;
 
 
 function drawStuff() {
@@ -109,7 +109,7 @@ function drawStuff() {
   }
   for(var pos in enemies) {
     enemies[pos].draw();
-    
+    move(enemies[pos]);
   }
 }
 
@@ -183,7 +183,13 @@ function placeEnemy() {
 
 //////////////////ENEMY FUNCTIONS//////////////////////
 
+function move(enemy){
 
+  enemy.x--;
+  
+
+
+}
 
 
 </script>
