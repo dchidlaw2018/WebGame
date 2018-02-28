@@ -81,6 +81,7 @@ function animate() {
   if(!placingTower) {
     clearBackground();
     drawStuff();
+placeEnemy();
 
     //put ai methods calls here
   }
@@ -156,6 +157,28 @@ function food(x, y, health, img){
   }
 }  
 
+function placeEnemy() {
+
+    if(currEnemyCount<=enemyCount) {
+        var walkWay = Math.random();
+        var x;
+        var y;
+        if(walkWay<=.33){
+            x=750;
+            y=50;
+        }
+        else if(walkWay<=.66 && walkWay>.33){
+            x=750;
+            y=250;
+        } 
+        else if(walkWay>.66){
+            x=750;
+            y=500;
+    }
+        enemies.push(new food(x, y));
+        currEnemyCount++;
+    }
+}
 
 
 //////////////////ENEMY FUNCTIONS//////////////////////
