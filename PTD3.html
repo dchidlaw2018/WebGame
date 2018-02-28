@@ -32,7 +32,7 @@
 }
  </style>
 </head> 
-<body onload="movingFoodInterval()">
+<body>
 
 <canvas width=800 height=542 id="mycanvas" class='mycanvas' ></canvas>
 
@@ -108,8 +108,17 @@ function drawStuff() {
     
   }
   for(var pos in enemies) {
+    console.log(enemies[pos].startY);
     enemies[pos].draw();
-    move(enemies[pos]);
+    if(enemies[pos].startY==50){
+      moveTop(enemies[pos]);
+    }
+    else if(enemies[pos].startY==250){
+      moveMiddle(enemies[pos]);
+    }
+    else {
+      moveBottom(enemies[pos]);
+    }   
   }
 }
 
@@ -149,9 +158,10 @@ function spawnBackpackTower(){
 
 //////////////////ENEMY FUNCTIONS//////////////////////
 
-function food(x, y, health, img){
+function food(x, y, sY, health, img){
   this.x=x;
   this.y=y;
+  this.startY=sY;
   this.draw = function() {
     ctx.drawImage(foodImg, this.x, this.y);
   }
@@ -163,19 +173,28 @@ function placeEnemy() {
         var walkWay = Math.random();
         var x;
         var y;
+        var startX;
+        var startY;
         if(walkWay<=.33){
             x=750;
             y=50;
+            startX=750;
+            startY=50;
+            
         }
         else if(walkWay<=.66 && walkWay>.33){
             x=750;
             y=250;
+            startX=750;
+            startY=250;
         } 
         else if(walkWay>.66){
             x=750;
             y=500;
+            startX=750;
+            startY=500;
     }
-        enemies.push(new food(x, y));
+        enemies.push(new food(x, y, startY));
         currEnemyCount++;
     }
 }
@@ -183,14 +202,32 @@ function placeEnemy() {
 
 //////////////////ENEMY FUNCTIONS//////////////////////
 
-function move(enemy){
+function moveTop(enemy){
 
-  enemy.x--;
-  
-
-
+  if (enemy.x>=463){
+    enemy.x--;
+  }
+  else if(enemy.x<=463 && enemy.y<=175){
+    enemy.y+=2;
+    enemy.x--; 
+  }  
+  else if(enemy.x>=211){
+    enemy.x--;
+    enemy.y+=0.5;
+  }
 }
 
+function moveMiddle(enemy){
+  if(enemy.x>=560){
+    enemy.x--;
+  }
+  else if(enemy.x<=560 && enemy.y<=419)
+    enemy.y++;
+}
+
+function moveBottom(enemy){
+
+}
 
 </script>
 </body>
