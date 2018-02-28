@@ -41,11 +41,9 @@
 
 
 <script>
-document.addEventListener("mousemove", Follow, false);
 
 var canvas = document.getElementById("mycanvas");
 canvas.addEventListener("click", placeBackpackTower, false);
-//canvas.onClick = function(){spawnBackpackTower()};
 
 
 var ctx = mycanvas.getContext("2d");
@@ -71,9 +69,9 @@ var towers = [];
 var enemies = [];
 
 function Follow(){
-	var x = event.clientX;		//x and y relative to the 
-	var y = event.clientY;		//window's coordinate system
-	
+    var x = event.clientX;      //x and y relative to the 
+    var y = event.clientY;      //window's coordinate system
+    
 }
 
 setInterval(animate, 33);
@@ -81,10 +79,10 @@ setInterval(animate, 33);
 function animate() {
   
   if(!placingTower) {
-  	clearBackground();
-  	drawStuff();`
+    clearBackground();
+    drawStuff();
 
-  	//put ai methods calls here
+    //put ai methods calls here
   }
   
   //alert("animating");
@@ -96,63 +94,8 @@ function clearBackground() {
   ctx.drawImage(mapImg, 0,0,800,542);
 }
 
-function food(x, y, health, img, path){
-	this.x = x;
-	this.y = y;
-	this.draw = ctx.drawImage(foodImg, x, y, 25, 25);
-}
-setInterval(spawnFood, 1000);
 var currEnemyCount=0;
 var enemyCount=2;
-
-
-
-
-
-
-
-//////////////////////ENEMY SPAWNING///////////////////
-function spawnFood(){
-  if(currEnemyCount<enemyCount){
-	  var walkWay = Math.random();
-    var x;
-    var y;
-    if(walkWay<=.33){
-      x=750;
-      y=50;
-    }
-    else if(walkWay<=.66 && walkWay>.33){
-      x=750;
-      y=250;
-    } 
-    else if(walkWay>.66){
-      x=750;
-      y=500;
-    }
-    
-    currEnemyCount++;
-    
-    this.draw = function() {
-  		ctx.drawImage(foodImg, this.x, this.y, 25, 25);
-  }
-
-  }  
-}
-
-function movingFoodInterval(){
-	//setInterval(moveFood(stud), 100);
-	alert("settingInterval");
-}
-
-function moveFood(stud){
-  food.x--;
-  alert(food.x);
-}
-//////////////////////ENEMY SPAWNING///////////////////
-
-
-
-
 
 
 function drawStuff() {
@@ -160,19 +103,14 @@ function drawStuff() {
   ctx.font = "30px Arial";
  
   for(var pos in towers) {
-  	towers[pos].draw();
-  	
+    towers[pos].draw();
+    
   }
   for(var pos in enemies) {
-  	enemies[pos].draw();
-  	
+    enemies[pos].draw();
+    
   }
 }
-
-
-
-
-
 
 
 //////////////////TOWER FUNCTIONS//////////////////////
@@ -182,37 +120,51 @@ var placingTower=false;
 function tower(x, y, damage, img, weaponImg){
   this.x=x;
   this.y=y;
-
   this.draw = function() {
-  	ctx.drawImage(backpackImg, this.x, this.y);
+    ctx.drawImage(backpackImg, this.x, this.y);
   }
 }   
 
 function placeBackpackTower(event) {
-	if(placingTower) {
-		
-
-		var xPox = event.clientX;
-		var yPox = event.clientY;
-		towers.push(new tower(xPox, yPox));
-		//alert(xPox + ", " + yPox);
-		placingTower = false;
-	}
+    if(placingTower) {
+        var xPox = event.clientX;
+        var yPox = event.clientY;
+        towers.push(new tower(xPox, yPox));
+        placingTower = false;
+    }
 }
 
-function spawnBackpackTower(){	
-	
-	placingTower=true;
-  // if(placingTower){
-  // 	towers.push(new tower(xPos, yPos));
-  // 	ctx.drawImage(backpackImg, x, y);
-  // }
-  // placingTower=false;
+function spawnBackpackTower(){  
+    placingTower=true;
 }
 
 //////////////////TOWER FUNCTIONS//////////////////////
 
 
+
+
+
+
+
+//////////////////ENEMY FUNCTIONS//////////////////////
+
+function food(x, y, health, img){
+  this.x=x;
+  this.y=y;
+  this.draw = function() {
+    ctx.drawImage(foodImg, this.x, this.y);
+  }
+}  
+
+
+
+//////////////////ENEMY FUNCTIONS//////////////////////
+
+
+
+
 </script>
 </body>
 </html>
+
+
