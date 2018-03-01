@@ -40,13 +40,12 @@
 <br>
 <button class="button-xlarge pure-button" onclick="spawnHydroTower()";>Hydro tower $20</button>
 
-
+<p style="float: right" id = "money"></p>
 
 <script>
 
 var canvas = document.getElementById("mycanvas");
 canvas.addEventListener("click", placeBackpackTower, false);
-canvas.addEventListener("click", placeHydroTower, false);
 
 
 var ctx = mycanvas.getContext("2d");
@@ -54,6 +53,7 @@ var x=5, y=0;
 
 var stuSpnX=700, stuSpnY=250;
 var money=40;
+document.getElementById('money').innerHTML = money;
 window.onload = animate;
 
 var posX=0, posY=0;
@@ -68,9 +68,11 @@ var hydroImage = new Image();
 foodImg.src = "student.png";
 mapImg.src = "map.png";
 backpackImg.src = "backpackTower.png";
-damagedBackpackImg.src = "backpackDamaged.png"
+damagedBackpackImg.src = "backpackDamage.png"
 hydroImage.src = "hydroImage.jpg";
 var stuX=100, stuY=100;
+
+
 
 var towers = [];
 var enemies = [];
@@ -103,7 +105,7 @@ function clearBackground() {
 }
 
 var currEnemyCount=0;
-var enemyCount=10;
+var enemyCount=3;
 
 
 function drawStuff() {
@@ -116,6 +118,7 @@ function drawStuff() {
   }
   for(var pos in enemies) {
     enemies[pos].draw();
+  
 
 
     if(enemies[pos].startY==50){
@@ -131,16 +134,20 @@ function drawStuff() {
       if(isCollide(enemies[pos], towers[tpos])){ //if enemies touches tower
         console.log(enemies[pos].health);
         enemies[pos].health-=towers[tpos].hits;
-        towers[tpos].health-=20
-        towers[tpos].image= damagedBackpackImg;
+        towers[tpos].health-=10
+        towers[tpos].image = damagedBackpackImg;
         if (enemies[pos].health<=0){
           enemies.splice(pos, 1);
           money+=10;
+          document.getElementById('money').innerHTML = money;
         }
         if(towers[tpos].health<=0){
           towers.splice(tpos, 1);
         }
       }   
+    }
+    if(enemies[pos].x>=223 && enemies[pos].x<=268){
+      enemies.splice(pos,1);
     }
   } 
 
@@ -164,11 +171,12 @@ function tower(x, y, damage, img, hp, weaponImg){
 
 function placeBackpackTower(event) {
     if(placingTower) {
-        var xPox = event.clientX;
-        var yPox = event.clientY;
-        towers.push(new tower(xPox, yPox, 20, backpackImg, 40));
-        money-=10;
-        placingTower = false;
+      var xPox = event.clientX;
+      var yPox = event.clientY;
+      towers.push(new tower(xPox, yPox, 20, backpackImg, 40));
+      money-=10;
+      document.getElementById('money').innerHTML = money;
+      placingTower = false;
     }
 }
 
@@ -178,6 +186,7 @@ function placeHydroTower() {
     var yPox = event.clientY;
     towers.push(new tower(xpox, yPox, 40, hydroImage));
     money-=20;
+    document.getElementById('money').innerHTML = money;
     placingTower=false;
   }
 }
