@@ -62,11 +62,13 @@ var posX=0, posY=0;
 var foodImg = new Image();
 var mapImg = new Image();
 var backpackImg = new Image();
+var damagedBackpackImg = new Image();
 var hydroImage = new Image();
 
 foodImg.src = "student.png";
 mapImg.src = "map.png";
 backpackImg.src = "backpackTower.png";
+damagedBackpackImg.src = "backpackDamaged.png"
 hydroImage.src = "hydroImage.jpg";
 var stuX=100, stuY=100;
 
@@ -101,7 +103,7 @@ function clearBackground() {
 }
 
 var currEnemyCount=0;
-var enemyCount=3;
+var enemyCount=10;
 
 
 function drawStuff() {
@@ -129,25 +131,30 @@ function drawStuff() {
       if(isCollide(enemies[pos], towers[tpos])){ //if enemies touches tower
         console.log(enemies[pos].health);
         enemies[pos].health-=towers[tpos].hits;
+        towers[tpos].health-=20
+        towers[tpos].image= damagedBackpackImg;
         if (enemies[pos].health<=0){
           enemies.splice(pos, 1);
           money+=10;
         }
-      }
-    }   
-  }
+        if(towers[tpos].health<=0){
+          towers.splice(tpos, 1);
+        }
+      }   
+    }
+  } 
+
 }
-
-
 //////////////////TOWER FUNCTIONS//////////////////////
 var placingTower=false;
 
 
-function tower(x, y, damage, img, weaponImg){
+function tower(x, y, damage, img, hp, weaponImg){
   this.x=x;
   this.y=y; 
   this.hits=damage;
   this.width=51;
+  this.health=hp;
   this.height=80;
   this.image=img
   this.draw = function() {
@@ -159,7 +166,7 @@ function placeBackpackTower(event) {
     if(placingTower) {
         var xPox = event.clientX;
         var yPox = event.clientY;
-        towers.push(new tower(xPox, yPox, 20, backpackImg));
+        towers.push(new tower(xPox, yPox, 20, backpackImg, 40));
         money-=10;
         placingTower = false;
     }
@@ -242,7 +249,7 @@ function placeEnemy() {
             startX=750;
             startY=500;
     }
-        enemies.push(new food(x, y, startY, 20));
+        enemies.push(new food(x, y, startY, 40));
         currEnemyCount++;
     }
 }
