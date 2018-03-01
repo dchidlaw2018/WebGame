@@ -36,7 +36,7 @@
 
 <canvas width=800 height=542 id="mycanvas" class='mycanvas' ></canvas>
 
-<button class="button-xlarge pure-button" onClick="spawnBackpackTower()";>Wow this is where you get a tower from</button>
+<button class="button-xlarge pure-button" onClick="spawnBackpackTower()";>Backpack tower $10</button>
 
 
 
@@ -50,7 +50,7 @@ var ctx = mycanvas.getContext("2d");
 var x=5, y=0;
 
 var stuSpnX=700, stuSpnY=250;
-
+var money=40;
 window.onload = animate;
 
 var posX=0, posY=0;
@@ -81,7 +81,7 @@ function animate() {
   if(!placingTower) {
     clearBackground();
     drawStuff();
-placeEnemy();
+    placeEnemy();
 
     //put ai methods calls here
   }
@@ -96,7 +96,7 @@ function clearBackground() {
 }
 
 var currEnemyCount=0;
-var enemyCount=3;
+var enemyCount=33;
 
 
 function drawStuff() {
@@ -108,8 +108,11 @@ function drawStuff() {
     
   }
   for(var pos in enemies) {
-    console.log(enemies[pos].startY);
     enemies[pos].draw();
+    if(isCollide(enemies[pos], towers[pos])){
+      console.log(enemies[pos].health)
+      enemies[pos].health-=towers[pos].damage;
+    }
     if(enemies[pos].startY==50){
       moveTop(enemies[pos]);
     }
@@ -130,8 +133,9 @@ var placingTower=false;
 function tower(x, y, damage, img, weaponImg){
   this.x=x;
   this.y=y;
+  this.image=img
   this.draw = function() {
-    ctx.drawImage(backpackImg, this.x, this.y);
+    ctx.drawImage(img, this.x, this.y);
   }
 }   
 
@@ -139,29 +143,38 @@ function placeBackpackTower(event) {
     if(placingTower) {
         var xPox = event.clientX;
         var yPox = event.clientY;
-        towers.push(new tower(xPox, yPox));
+        towers.push(new tower(xPox, yPox, 10, backpackImg));
         placingTower = false;
     }
 }
 
-function spawnBackpackTower(){  
+function spawnBackpackTower(){
+  if(money>=10){  
     placingTower=true;
+    money-=10;
+  }  
 }
 
 //////////////////TOWER FUNCTIONS//////////////////////
 
-
-
-
-
+function isCollide(a, b) {
+    return (
+        ((a.y + a.height) < (b.y)) ||
+        (a.y > (b.y + b.height)) ||
+        ((a.x + a.width) < b.x) ||
+        (a.x > (b.x + b.width))
+    );
+}
 
 
 //////////////////ENEMY FUNCTIONS//////////////////////
 
-function food(x, y, sY, health, img){
+function food(x, y, sY, hp, img){
   this.x=x;
   this.y=y;
   this.startY=sY;
+  this.health=hp;
+  this.foodImg=img
   this.draw = function() {
     ctx.drawImage(foodImg, this.x, this.y);
   }
@@ -196,7 +209,7 @@ function placeEnemy() {
             startX=750;
             startY=500;
     }
-        enemies.push(new food(x, y, startY));
+        enemies.push(new food(x, y, startY, 20));
         currEnemyCount++;
     }
 }
