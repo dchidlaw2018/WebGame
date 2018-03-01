@@ -175,22 +175,24 @@ function placeEnemy() {
         var y;
         var startX;
         var startY;
-        if(walkWay<=.33){
+
+
+        if(walkWay<=.33){//Top
             x=750;
-            y=50;
+            y=70;
             startX=750;
             startY=50;
             
         }
-        else if(walkWay<=.66 && walkWay>.33){
+        else if(walkWay<=.66 && walkWay>.33){//Middle
             x=750;
-            y=250;
+            y=235;
             startX=750;
             startY=250;
         } 
-        else if(walkWay>.66){
+        else if(walkWay>.66){//Bottom
             x=750;
-            y=500;
+            y=470;
             startX=750;
             startY=500;
     }
@@ -200,22 +202,24 @@ function placeEnemy() {
 }
 
 
-//////////////////ENEMY FUNCTIONS//////////////////////
 
 function moveTop(enemy){
-
   if (enemy.x>=463){
     enemy.x--;
+    enemy.y+=.1;
   }
-  else if(enemy.x<=463 && enemy.y<=175){
-    enemy.y+=2;
-    enemy.x--; 
+  else if(enemy.x<=463&&enemy.x>=430){
+    enemy.y+=1;
+    enemy.x-=.2; 
   }  
-  else if(enemy.x>=211){
-    enemy.x--;
-    enemy.y+=0.5;
+  else if(enemy.x<=430&&enemy.x>=445){
+    enemy.x-=.4;
+    enemy.y-=1;
   }
+  else if(enemy.x<=445)
+  	enemy.x--;
 }
+
 
 function moveMiddle(enemy){
   if(enemy.x>=560){
@@ -225,9 +229,13 @@ function moveMiddle(enemy){
     enemy.y++;
 }
 
+
 function moveBottom(enemy){
 
 }
+
+//////////////////ENEMY FUNCTIONS//////////////////////
+
 
 </script>
 </body>
