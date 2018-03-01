@@ -144,6 +144,7 @@ function placeBackpackTower(event) {
         var xPox = event.clientX;
         var yPox = event.clientY;
         towers.push(new tower(xPox, yPox, 10, backpackImg));
+        money-=10;
         placingTower = false;
     }
 }
@@ -151,18 +152,17 @@ function placeBackpackTower(event) {
 function spawnBackpackTower(){
   if(money>=10){  
     placingTower=true;
-    money-=10;
   }  
 }
 
 //////////////////TOWER FUNCTIONS//////////////////////
 
-function isCollide(a, b) {
+function isCollide(tower, food) {
     return (
-        ((a.y + a.height) < (b.y)) ||
-        (a.y > (b.y + b.height)) ||
-        ((a.x + a.width) < b.x) ||
-        (a.x > (b.x + b.width))
+        ((tower.y + tower.height) < (food.y)) ||
+        (tower.y > (food.y + food.height)) ||
+        ((tower.x + tower.width) < food.x) ||
+        (tower.x > (food.x + food.width))
     );
 }
 
