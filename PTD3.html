@@ -84,13 +84,13 @@ function Follow(){
 }
 
 setInterval(animate, 33);
-
+setInterval(placeEnemy, 3000);
 function animate() {
   
   if(!placingTower) {
     clearBackground();
     drawStuff();
-    placeEnemy();
+    //placeEnemy();
 
     //put ai methods calls here
   }
@@ -105,7 +105,7 @@ function clearBackground() {
 }
 
 var currEnemyCount=0;
-var enemyCount=3;
+var enemyCount=20;
 
 
 function drawStuff() {
