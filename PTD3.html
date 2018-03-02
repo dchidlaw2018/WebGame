@@ -34,18 +34,21 @@
 
 <button class="button-xlarge pure-button" onClick="spawnBackpackTower()";>Backpack tower $10</button>
 <br>
-<button class="button-xlarge pure-button" onclick="spawnHydroTower()";>Hydro tower $20</button>
+
 <br>
 <p style="top: auto; left: auto" id = "money"></p>
 <p style="top: auto; left: auto" id = "lives"></p>
 
 <script>
+//document.getElementById("demo").onkeypress = function() {hardMode()};
+
+
 var canvas = document.getElementById("mycanvas");
 canvas.addEventListener("click", placeBackpackTower, false);
 var ctx = mycanvas.getContext("2d");
 var x=5, y=0;
 var stuSpnX=700, stuSpnY=250;
-var money=40;
+var money=20;
 document.getElementById('money').innerHTML = "Money left: $" + money;
 window.onload = animate;
 var posX=0, posY=0;
@@ -57,6 +60,7 @@ var backpackImg = new Image();
 var damagedBackpackImg = new Image();
 var hydroImage = new Image();
 var lives = 5;
+var enemiesKilled=0;
 document.getElementById('lives').innerHTML = "Lives left: " + lives;
 
 
@@ -76,15 +80,16 @@ function Follow(){
     
 }
 setInterval(animate, 33);
-setInterval(placeEnemy, 2000);
+setInterval(placeEnemy, 700);
 function animate() {
   
-  if(!placingTower) {
+  //if(!placingTower) {
     clearBackground();
     drawStuff();
     //placeEnemy();
     //put ai methods calls here
-  }
+  //}
+
   if(lives==0){
     window.alert("yalost bruh");
     window.location.reload(false);
@@ -95,11 +100,11 @@ function clearBackground() {
   ctx.drawImage(mapImg, 0,0,800,542);
 }
 var currEnemyCount=0;
-var enemyCount=100;
+var enemyCount=25;
 function drawStuff() {
   ctx.fillStyle = "black";
   ctx.font = "30px Arial";
- 
+ console.log(enemiesKilled);
   for(var pos in towers) {
     towers[pos].draw();
     
@@ -126,7 +131,11 @@ function drawStuff() {
           enemies.splice(pos, 1);
           money+=5;
           document.getElementById('money').innerHTML = "Money left: $" + money;
-        }
+          enemiesKilled++;
+         
+         	if(enemiesKilled==enemyCount+1)
+         		alert("You Win!");
+          }
         if(towers[tpos].health<=0){
           towers.splice(tpos, 1);
         }
@@ -136,10 +145,18 @@ function drawStuff() {
       enemies.splice(pos,1);
       lives--;
       document.getElementById('lives').innerHTML = "Lives left: " + lives;
+      if(enemiesKilled+lives-1==enemyCount && lives>0)
+      	alert("you win!");
+      ///////////////////////////////////FIxxxxx ^^^ DIsssss////////////////
     }
     //Removing enemies?^
   } 
 }
+
+// function hardMode() {
+// 	enemyCount=100;
+// }
+
 //////////////////TOWER FUNCTIONS//////////////////////
 var placingTower=false;
 function tower(x, y, damage, img, hp, weaponImg){
