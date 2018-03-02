@@ -49,6 +49,8 @@ document.getElementById('money').innerHTML = money;
 window.onload = animate;
 var posX=0, posY=0;
 var foodImg = new Image();
+var foodImg2 = new Image();
+var foodImg3 = new Image();
 var mapImg = new Image();
 var backpackImg = new Image();
 var damagedBackpackImg = new Image();
@@ -56,7 +58,9 @@ var hydroImage = new Image();
 var lives = 0;
 
 
-foodImg.src = "student.png";
+foodImg.src = "food1.png";
+foodImg2.src = "food2.png";
+foodImg3.src = "food3.png";
 mapImg.src = "map.png";
 backpackImg.src = "backpackTower.png";
 damagedBackpackImg.src = "backpackDamage.png"
@@ -186,6 +190,7 @@ function isCollide(tower, food) {
 }
 //////////////////ENEMY FUNCTIONS//////////////////////
 function food(x, y, sY, hp, img){
+  var imagePick = Math.random();
   this.x=x;
   this.y=y;
   this.startY=sY;
@@ -194,7 +199,15 @@ function food(x, y, sY, hp, img){
   this.height=25;
   this.width=25;
   this.draw = function() {
-    ctx.drawImage(foodImg, this.x, this.y);
+    
+    if(imagePick<=.33)
+      ctx.drawImage(foodImg, this.x, this.y);
+    else if(imagePick<=.66)
+      ctx.drawImage(foodImg2, this.x, this.y);
+    else if(imagePick<=.66)
+      ctx.drawImage(foodImg2, this.x, this.y);
+    else
+      ctx.drawImage(foodImg3, this.x, this.y);
   }
 }  
 function placeEnemy() {
