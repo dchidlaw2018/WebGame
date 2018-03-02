@@ -46,7 +46,7 @@ var ctx = mycanvas.getContext("2d");
 var x=5, y=0;
 var stuSpnX=700, stuSpnY=250;
 var money=40;
-document.getElementById('money').innerHTML = "Money left: " + money;
+document.getElementById('money').innerHTML = "Money left: $" + money;
 window.onload = animate;
 var posX=0, posY=0;
 var foodImg = new Image();
@@ -271,7 +271,7 @@ function moveTop(enemy){
   else if(enemy.x<=385&&enemy.y>=225){
     enemy.y++;
     enemy.x+=0.3;
-    console.log(enemy.x + "," + enemy.y);
+    
   }
 
 }
@@ -281,8 +281,17 @@ function moveMiddle(enemy){
   if(enemy.x>=560){
     enemy.x--;
   }
-  else if(enemy.x<=560 && enemy.y<=419)
+  else if(enemy.x>=559 && enemy.y<=410)
     enemy.y++;
+  else if(enemy.x>=280){
+  	enemy.x--;
+  }
+  else if(enemy.x<=280){
+  	enemy.x-=0.6;
+  	enemy.y--;
+  }
+
+
 }
 
 
