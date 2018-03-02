@@ -36,7 +36,7 @@
 
 <canvas width=800 height=542 id="mycanvas" class='mycanvas' ></canvas>
 
-<button class="button-xlarge pure-button" onClick="spawnBackpackTower()";>Wow this is where you get a tower from</button>
+<button class="button-xlarge pure-button" onClick="spawnBackpackTower()";>Backpack tower $10</button>
 
 
 
@@ -51,6 +51,7 @@ var x=5, y=0;
 
 var stuSpnX=700, stuSpnY=250;
 
+var money=40;
 window.onload = animate;
 
 var posX=0, posY=0;
@@ -110,6 +111,12 @@ function drawStuff() {
   for(var pos in enemies) {
     console.log(enemies[pos].startY);
     enemies[pos].draw();
+
+    if(isCollide(enemies[pos], towers[pos])){
+       console.log(enemies[pos].health)
+       enemies[pos].health-=towers[pos].damage;
+     }
+
     if(enemies[pos].startY==50){
       moveTop(enemies[pos]);
     }
@@ -152,7 +159,14 @@ function spawnBackpackTower(){
 
 
 
-
+function isCollide(a, b) {
+     // return (
+     //     ((a.y + a.height) < (b.y)) ||
+     //     (a.y > (b.y + b.height)) ||
+     //     ((a.x + a.width) < b.x) ||
+     //     (a.x > (b.x + b.width))
+     // );
+ }
 
 
 
@@ -208,16 +222,27 @@ function moveTop(enemy){
     enemy.x--;
     enemy.y+=.1;
   }
-  else if(enemy.x<=463&&enemy.x>=430){
+  else if(enemy.x<=463&&enemy.x>430){
     enemy.y+=1;
     enemy.x-=.2; 
   }  
-  else if(enemy.x<=430&&enemy.x>=445){
+  else if(enemy.x>=430&&enemy.x<=445){
     enemy.x-=.4;
     enemy.y-=1;
   }
-  else if(enemy.x<=445)
+  else if(enemy.x<=430&&enemy.x>=385){
+  	enemy.y-=1;
+  	enemy.x-=0.5;
+  }
+  else if(enemy.x<=385&&enemy.y<=225){
+  	enemy.y+=0.3;
   	enemy.x--;
+  }
+  else if(enemy.x<=385&&enemy.y>=225){
+   	enemy.y++;
+   	enemy.x+=0.3;
+  }
+
 }
 
 
