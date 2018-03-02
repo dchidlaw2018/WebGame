@@ -53,11 +53,14 @@ var mapImg = new Image();
 var backpackImg = new Image();
 var damagedBackpackImg = new Image();
 var hydroImage = new Image();
+var lives = 0;
+
+
 foodImg.src = "student.png";
 mapImg.src = "map.png";
 backpackImg.src = "backpackTower.png";
 damagedBackpackImg.src = "backpackDamage.png"
-hydroImage.src = "hydroImage.jpg";
+hydroImage.src = "hydroImage.png";
 var stuX=100, stuY=100;
 var towers = [];
 var enemies = [];
@@ -76,6 +79,8 @@ function animate() {
     //placeEnemy();
     //put ai methods calls here
   }
+  if(lives=0)
+    alert("yalost bruh");
   
   //alert("animating");
 }
@@ -83,7 +88,7 @@ function clearBackground() {
   ctx.drawImage(mapImg, 0,0,800,542);
 }
 var currEnemyCount=0;
-var enemyCount=20;
+var enemyCount=3;
 function drawStuff() {
   ctx.fillStyle = "black";
   ctx.font = "30px Arial";
@@ -120,9 +125,10 @@ function drawStuff() {
         }
       }   
     }
-    if(enemies[pos].x>=223 && enemies[pos].x<=268){
+    if(enemies[pos].x>=230 && enemies[pos].x<=240 && enemies[pos].y>=340 && enemies[pos].y<=350 ){
       enemies.splice(pos,1);
     }
+    //Removing enemies?^
   } 
 }
 //////////////////TOWER FUNCTIONS//////////////////////
@@ -153,7 +159,7 @@ function placeHydroTower() {
   if(placingTower) {
     var xPox = event.clientX;
     var yPox = event.clientY;
-    towers.push(new tower(xpox, yPox, 40, hydroImage));
+    towers.push(new tower(xPox, yPox, 40, hydroImage, 80));
     money-=20;
     document.getElementById('money').innerHTML = money;
     placingTower=false;
@@ -221,22 +227,39 @@ function placeEnemy() {
         currEnemyCount++;
     }
 }
+
+
 function moveTop(enemy){
   if (enemy.x>=463){
     enemy.x--;
     enemy.y+=.1;
   }
-  else if(enemy.x<=463&&enemy.x>=430){
+  else if(enemy.x<=463&&enemy.x>430){
     enemy.y+=1;
     enemy.x-=.2; 
   }  
-  else if(enemy.x<=430&&enemy.x>=445){
+  else if(enemy.x>=430&&enemy.x<=445){
     enemy.x-=.4;
     enemy.y-=1;
   }
-  else if(enemy.x<=445)
+  else if(enemy.x<=430&&enemy.x>=385){
+    enemy.y-=1;
+    enemy.x-=0.5;
+  }
+  else if(enemy.x<=385&&enemy.y<=225){
+    enemy.y+=0.3;
     enemy.x--;
+    
+  }
+  else if(enemy.x<=385&&enemy.y>=225){
+    enemy.y++;
+    enemy.x+=0.3;
+    console.log(enemy.x + "," + enemy.y);
+  }
+
 }
+
+
 function moveMiddle(enemy){
   if(enemy.x>=560){
     enemy.x--;
@@ -244,8 +267,19 @@ function moveMiddle(enemy){
   else if(enemy.x<=560 && enemy.y<=419)
     enemy.y++;
 }
+
+
 function moveBottom(enemy){
+  if(enemy.x>=320){
+    enemy.x--;
+    enemy.y+=0.1;
+  }
+  else if (enemy.x<=320){
+    enemy.y--;
+    enemy.x-=0.46;
+  }
 }
+
 //////////////////ENEMY FUNCTIONS//////////////////////
 </script>
 </body>
