@@ -121,6 +121,7 @@ function drawStuff() {
         enemies[pos].health-=towers[tpos].hits;
         towers[tpos].health-=10
         towers[tpos].image = damagedBackpackImg;
+        towers[tpos].draw();
         if (enemies[pos].health<=0){
           enemies.splice(pos, 1);
           money+=5;
@@ -155,8 +156,8 @@ function tower(x, y, damage, img, hp, weaponImg){
 }   
 function placeBackpackTower(event) {
     if(placingTower) {
-      var xPox = event.clientX;
-      var yPox = event.clientY;
+      var xPox = event.clientX-25;
+      var yPox = event.clientY-40;
       towers.push(new tower(xPox, yPox, 20, backpackImg, 40));
       money-=10;
       document.getElementById('money').innerHTML = "Money left: $" + money;
